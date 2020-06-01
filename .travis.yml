@@ -1,8 +1,17 @@
+os: linux
 dist: trusty
 
 language: cpp
 compiler: gcc-9
-os: linux
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-9
+
+env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9
 
 script:
 - mkdir build
