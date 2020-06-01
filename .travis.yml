@@ -1,8 +1,16 @@
 dist: trusty
 
 language: cpp
-compiler: gcc
+compiler: gcc-9
 os: linux
+
+env:
+- CC=gcc-9
+- CXX=g++-9
+- CC_FOR_BUILD=gcc-7
+- CXX_FOR_BUILD=g++-7
+- CMAKE_ARGS="-DCMAKE_CXX_COMPILER=/usr/bin/c++ -DCMAKE_C_COMPILER=/usr/bin/cc"
+- CACHE_NAME=JOB3
 
 script:
 - mkdir build
