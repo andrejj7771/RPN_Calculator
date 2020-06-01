@@ -1,2 +1,9 @@
 language: cpp
 compiler: gcc
+
+script:
+	- mkdir build
+	- cd buid
+	- cmake -DCMAKE_BUILD_TYPE=Release ..
+	- make -j2
+	- make test
