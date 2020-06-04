@@ -8,14 +8,24 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
+      - sourceline: 'ppa:beineri/opt-qt-5.15.0-trusty'
     packages:
       - g++-9
+      - qt515base
+      - qt515core
+      - qt515gui
+      - qt515widgets
+      - libgl1-mesa-dev
 
-env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9
+env:
+- COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=ON 
+- COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=ON
+- COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=OFF
+- COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=OFF
 
 script:
 - mkdir build
 - cd build
-- cmake ..
+- cmake -DCMAKE_BUILD_TYPE=..
 - cmake --build .
 - ctest --output-on-failure
