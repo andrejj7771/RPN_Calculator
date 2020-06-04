@@ -4,9 +4,10 @@ dist: bionic
 language: cpp
 compiler: gcc-9
 
-before_install:
-  - sudo apt-get install qt5-default
-  - sudo apt-get install libgl1-mesa-dev
+_install_qt: &install_qt
+  before_install:
+    - sudo apt-get install qt5-default
+    - sudo apt-get install libgl1-mesa-dev
 
 addons:
   apt:
@@ -17,10 +18,16 @@ addons:
       - g++-9
 
 env:
-- COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=ON 
-- COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=ON
 - COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=OFF
 - COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=OFF
+
+jobs:
+  include:
+    - env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=ON
+    - <<: *install_qt
+    - env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=ON
+    - <<: *install_qt
+   
 
 script:
 - mkdir build
