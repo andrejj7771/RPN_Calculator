@@ -4,18 +4,17 @@ dist: bionic
 language: cpp
 compiler: gcc-9
 
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install qt5-default
+
 addons:
   apt:
+    update: true
     sources:
       - ubuntu-toolchain-r-test
-      - sourceline: 'sudo add-apt-repository ppa:beineri/opt-qt-5.14.2-bionic'
     packages:
       - g++-9
-      - qt514base
-      - qt514core
-      - qt514gui
-      - qt514widgets
-      - libgl1-mesa-dev
 
 env:
 - COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=ON 
