@@ -23,11 +23,11 @@ env:
 
 jobs:
   include:
-    - env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=ON
     - <<: *install_qt
-    - env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=ON
+      env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=ON
     - <<: *install_qt
-   
+      env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=ON
+    
 
 script:
 - mkdir build
