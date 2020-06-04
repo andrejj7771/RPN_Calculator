@@ -5,8 +5,8 @@ language: cpp
 compiler: gcc-9
 
 before_install:
-  - sudo apt-get update
   - sudo apt-get install qt5-default
+  - sudo apt-get install libgl1-mesa-dev
 
 addons:
   apt:
@@ -25,6 +25,6 @@ env:
 script:
 - mkdir build
 - cd build
-- cmake -DCMAKE_BUILD_TYPE=..
+- cmake -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DBUILD_GUI=$BUILD_GUI ..
 - cmake --build .
 - ctest --output-on-failure
