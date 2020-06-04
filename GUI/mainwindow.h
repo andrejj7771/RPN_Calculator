@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QVector>
 
+#include <memory>
+
 namespace Ui {
 	class MainWindow;
 }
