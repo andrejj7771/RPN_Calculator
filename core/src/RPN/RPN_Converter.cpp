@@ -104,8 +104,14 @@ std::vector<token> converter::tokenize_expression() const {
 	std::vector<token> token_list;
 	std::string current_number;
 	
-	for (const char s : m_expression) {
-		if (is_digit(s)) {
+	char prev_s = '\0';
+	for (auto it = m_expression.begin(); it != m_expression.end(); ++it) {
+		char s = *it;
+		if (s == '.') {
+			if (is_digit(prev_s)) {
+				current_number += s;
+			} else continue;
+		} else if (is_digit(s)) {
 			current_number += s;
 		} else {
 			if (!current_number.empty()) {
@@ -117,6 +123,8 @@ std::vector<token> converter::tokenize_expression() const {
 				token_list.push_back(std::string(&s, 1));
 			}
 		}
+		
+		prev_s = s;
 	}
 	
 	if (!current_number.empty()) {
