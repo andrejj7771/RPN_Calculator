@@ -10,5 +10,5 @@ add_test(NAME RPN_Converter_Test_2 COMMAND RPN_Converter_Test "-346 + 14" "346 -
 add_test(NAME RPN_Converter_Test_3 COMMAND RPN_Converter_Test "2 + 2 * 2" "2 2 2 * +")
 add_test(NAME RPN_Converter_Test_4 COMMAND RPN_Converter_Test "(2 + 2) * 2" "2 2 + 2 *")
 add_test(NAME RPN_Converter_Test_5 COMMAND RPN_Converter_Test "10 + - 14" "10 + 14 -")
-add_test(NAME RPN_Converter_Test_6 COMMAND RPN_Converter_Test "10 + - 14 * 2" "10 + 14 2 * -")
+add_test(NAME RPN_Converter_Test_6 COMMAND RPN_Converter_Test "10.5 + - 14.2 * 2.8" "10.5 + 14.2 2.8 * -")
 add_test(NAME RPN_Converter_Test_7 COMMAND RPN_Converter_Test "14 * (-2) + 10 - (-5)" "14 2 - * 10 + 5 - -")
