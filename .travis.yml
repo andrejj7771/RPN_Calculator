@@ -19,27 +19,19 @@ addons:
 
 jobs:
   include:
-    - <<: *install_qt
+    - if: branch != master AND branch != console
+      <<: *install_qt
       env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=ON
-      branches:
-        except:
-          - master
-          - console
-          
-    - env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=OFF
-      branches:
-        except:
-          - master
-          - GUI
-          
-    - <<: *install_qt
+      
+    - if: branch != master AND branch != GUI       
+      env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=OFF
+      
+    - if: branch = master
+      <<: *install_qt
       env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=ON
-      branches:
-        only: master
-    
-    - env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=OFF
-      branches:
-        only: master
+      
+    - if: branch = master
+      env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=OFF
     
 script:
 - mkdir build
