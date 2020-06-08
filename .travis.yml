@@ -27,6 +27,10 @@ jobs:
       env: BUILD_GUI=OFF
     - if: branch = console
       env: BUILD_GUI=ON
+    - if: branch = master
+      env: BUILD_CONFIGURATION=Debug
+    - if: branch != master
+      env: BUILD_CONFIGURATION=Release
 
 jobs:
   include:
