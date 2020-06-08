@@ -144,46 +144,112 @@ inline priority_t get_priority(const token & t) {
 ///
 inline std::string validate_expression(const std::string & expr) {
 	std::string copy = expr;
-	std::vector<size_t> brackets_indices;
+	std::vector<size_t> open_brackets;
+	
+	//remove excess operations before an expression
+	auto it = copy.begin();
+	bool has_minus = false;
+	while(is_operation(*it)) {
+		if (*it == '-' && !has_minus) {
+			has_minus = true;
+			++it;
+			continue;
+		}
+		
+		copy.erase(it);
+	}
 	
 	char last_symbol = '\0';
+	int dot_counter = 0;
 	for (size_t i = 0; i < copy.size(); ++i) {
+		bool set_last = true;
 		char & current_symbol = copy.at(i);
 		
-		if (current_symbol == '(') {
-			if (is_digit(last_symbol)) {
-				copy.erase(i, 1);
-				--i;
-			} else {
-				brackets_indices.push_back(i);
-			}
-		} else if (current_symbol == ')') {
-			if (brackets_indices.empty() ||
-					(i != copy.size() - 1 && is_digit(copy.at(i + 1))))
-			{
-				copy.erase(i, 1);
-				--i;
-			} else {
-				if (last_symbol == '(') {
-					// there are empty brackets
-					brackets_indices.pop_back();
-					copy.erase(i - 1, 2);
-					i -= 2;
-				} else {
-					// there is a pair of brackets
-					brackets_indices.pop_back();
+		switch (current_symbol) {
+			case '(': {
+				dot_counter = 0;
+				if (is_digit(last_symbol)) {
+					copy.insert(i, 1, '*');
+					++i;
 				}
+				
+				open_brackets.push_back(i);
+				break;
+			}
+			case ')': {
+				dot_counter = 0;
+				if (open_brackets.empty()) {
+					copy.erase(i, 1);
+					--i;
+				} else if (i != copy.size() - 1 &&
+						   (is_digit(copy.at(i + 1)) || copy.at(i + 1) == '('))
+				{
+					copy.insert(i + 1, 1, '*');
+					open_brackets.pop_back();
+					++i;
+				} else {
+					if (last_symbol == '(') {
+						// there are an empty brackets
+						open_brackets.pop_back();
+						copy.erase(i - 1, 2);
+						i -= 2;
+					} else {
+						// there is a pair of brackets
+						open_brackets.pop_back();
+					}
+				}
+				
+				break;
+			}
+			case ',': {
+				current_symbol = '.';
+			}
+			case '.': {
+				if (!is_digit(last_symbol)) {
+					copy.insert(i, 1, '0');
+					++i;
+				}
+				
+				++dot_counter;
+				if (dot_counter > 1 ||
+						(i != copy.size() - 1 && !is_digit(copy.at(i + 1))))
+				{
+					copy.erase(i, 1);
+					--dot_counter;
+					--i;
+				}
+				break;
+			}
+			default: {
+				if (is_digit(current_symbol)) {
+					break;
+				} else if (is_operation(current_symbol)) {
+					dot_counter = 0;
+					break;
+				}
+				
+				copy.erase(i, 1);
+				--i;
+				
+				set_last = false;
+				break;
 			}
 		}
 		
-		if (i != std::numeric_limits<size_t>().max()) {
+		if (i != std::numeric_limits<size_t>().max() && set_last) {
 			last_symbol = copy.at(i);
 		}
 	}
 	
-	while(!brackets_indices.empty()) {
-		copy.erase(*(brackets_indices.end() - 1), 1);
-		brackets_indices.pop_back();
+	//remove unlosed brackets
+	while(!open_brackets.empty()) {
+		copy.erase(*(open_brackets.end() - 1), 1);
+		open_brackets.pop_back();
+	}
+	
+	//remove excess operations after an expression
+	while(is_operation(*(copy.end() - 1))) {
+		copy.erase(copy.end() - 1);
 	}
 	
 	return copy;
