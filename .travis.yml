@@ -20,6 +20,13 @@ addons:
 env:
 - COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=OFF
 - COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=OFF
+      
+jobs:      
+  exclude:
+    - if: branch = GUI
+      env: BUILD_GUI=OFF
+    - if: branch = console
+      env: BUILD_GUI=ON
 
 jobs:
   include:
@@ -28,7 +35,6 @@ jobs:
     - <<: *install_qt
       env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=ON
     
-
 script:
 - mkdir build
 - cd build
