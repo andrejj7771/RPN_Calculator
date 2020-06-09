@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <Solver/Solver.hpp>
+#include <define.hpp>
 
 #include <QLineEdit>
 #include <QMessageBox>
@@ -95,6 +96,7 @@ void MainWindow::clearButton_Pressed() {
 void MainWindow::equalButton_Pressed() {
 	auto expressionField = ui->expression_field;
 	std::string expression = expressionField->text().toStdString();
+	expression = validate_expression(expression);
 	
 	if (m_expressionSolver->calculate(expression, m_expressionResult)) {
 		auto numberStr = QString::number(m_expressionResult);
