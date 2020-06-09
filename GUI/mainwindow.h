@@ -46,6 +46,7 @@ private:
 	
 	void initKeyboard();
 	void connectKeyboard();
+	void initStyle();
 	
 	void keyboardButton_Pressed();
 	void backButton_Pressed();
