@@ -17,18 +17,22 @@ addons:
     packages:
       - g++-9
 
-env:
-- COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=OFF
-- COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=OFF
-
 jobs:
   include:
-    - <<: *install_qt
+    - if: branch != master AND branch != console
+      <<: *install_qt
       env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=ON
-    - <<: *install_qt
+      
+    - if: branch != master AND branch != GUI       
+      env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Debug BUILD_GUI=OFF
+      
+    - if: branch = master
+      <<: *install_qt
       env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=ON
+      
+    - if: branch = master
+      env: COMPILER_NAME=gcc CXX=g++-9 CC=gcc-9 BUILD_CONFIGURATION=Release BUILD_GUI=OFF
     
-
 script:
 - mkdir build
 - cd build

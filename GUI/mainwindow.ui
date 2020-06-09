@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>507</width>
-    <height>283</height>
+    <height>261</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>507</width>
+    <height>261</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -280,7 +286,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
