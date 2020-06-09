@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <Solver/Solver.hpp>
+#include <define.hpp>
 
 #include <QLineEdit>
 #include <QMessageBox>
@@ -14,8 +15,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_expressionSolver(std::make_shared<Solver::solver>())
 {
 	ui->setupUi(this);
+	setWindowTitle("Calculator");
 	
 	initKeyboard();
+	initStyle();
 }
 
 MainWindow::~MainWindow() {
@@ -70,6 +73,11 @@ void MainWindow::connectKeyboard() {
 					 this, &MainWindow::equalButton_Pressed);
 }
 
+void MainWindow::initStyle() {
+	m_equalButton->setStyleSheet("background: darkgreen");
+	ui->error_message->setStyleSheet("color: red");
+}
+
 void MainWindow::keyboardButton_Pressed() {
 	QPushButton * button = qobject_cast<QPushButton*>(sender());
 	QString value = button->text();
@@ -93,8 +101,10 @@ void MainWindow::clearButton_Pressed() {
 }
 
 void MainWindow::equalButton_Pressed() {
+	ui->error_message->clear();
 	auto expressionField = ui->expression_field;
 	std::string expression = expressionField->text().toStdString();
+	expression = validate_expression(expression);
 	
 	if (m_expressionSolver->calculate(expression, m_expressionResult)) {
 		auto numberStr = QString::number(m_expressionResult);
