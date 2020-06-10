@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	setWindowTitle("Calculator");
 	
 	initKeyboard();
+	initConnections();
 	initStyle();
 }
 
@@ -53,24 +54,25 @@ void MainWindow::initKeyboard() {
 	m_backButton = ui->button_back;
 	m_clearButton = ui->button_clear;
 	m_equalButton = ui->button_equal;
-	
-	connectKeyboard();
 }
 
-void MainWindow::connectKeyboard() {
+void MainWindow::initConnections() {
 	for (QPushButton * button : m_keyboard) {
 		QObject::connect(button, &QPushButton::pressed,
 						 this, &MainWindow::keyboardButton_Pressed);
 	}
 	
 	QObject::connect(m_backButton, &QPushButton::pressed,
-					 this, &MainWindow::backButton_Pressed);
+					 this, &MainWindow::undoButton_Pressed);
 	
 	QObject::connect(m_clearButton, &QPushButton::pressed,
 					 this, &MainWindow::clearButton_Pressed);
 	
 	QObject::connect(m_equalButton, &QPushButton::pressed,
 					 this, &MainWindow::equalButton_Pressed);
+	
+	QObject::connect(ui->expression_field, &QLineEdit::textEdited,
+					 this, &MainWindow::keyPressed);
 }
 
 void MainWindow::initStyle() {
@@ -79,36 +81,86 @@ void MainWindow::initStyle() {
 }
 
 void MainWindow::keyboardButton_Pressed() {
+	ui->error_message->clear();
 	QPushButton * button = qobject_cast<QPushButton*>(sender());
 	QString value = button->text();
 	
 	auto expressionField = ui->expression_field;
 	QString expression = expressionField->text();
-	expression.append(button->text());
+	QString btnText = button->text();
+	expression.append(btnText);
+	
+	if (!m_undoHistory.isEmpty() && !expressionField->text().isEmpty()) {
+		m_undoHistory.top().first.append(btnText);
+	} else {
+		m_undoHistory.push({expression, 0});
+	}
+	
 	expressionField->setText(expression);
 }
 
-void MainWindow::backButton_Pressed() {
-	QMessageBox m;
-	m.information(this, "Info", "The function not yet available");
+void MainWindow::keyPressed(const QString & text) {
+	if (text.isEmpty() && !m_undoHistory.isEmpty()) {
+		m_undoHistory.pop();
+	}
+	
+	if (!m_undoHistory.isEmpty() &&
+		!ui->expression_field->text().isEmpty())
+	{
+		m_undoHistory.top().first = text;
+	} else {
+		m_undoHistory.push({text, 0});
+	}
+}
+
+void MainWindow::undoButton_Pressed() {
+	if (m_undoHistory.isEmpty()) {
+		ui->error_message->setText("No undo history");
+		return;
+	}
+	
+	auto & undoData = m_undoHistory.top();
+	QString data = undoData.first;
+	
+	if (data.size() == undoData.second) {
+		m_undoHistory.pop();
+		if (!m_undoHistory.isEmpty()) {
+			data = m_undoHistory.top().first;
+			ui->expression_field->setText(data);
+		}
+	} else {
+		if (!ui->expression_field->text().isEmpty()) {
+			data.remove(data.size() - 1, 1);
+			m_undoHistory.top().first = data;
+		}
+		
+		ui->expression_field->setText(data);
+		
+		if (data.isEmpty() && m_undoHistory.size() == 1) {
+			m_undoHistory.pop();
+		}
+	}
 }
 
 void MainWindow::clearButton_Pressed() {
 	ui->error_message->clear();
 	ui->expression_field->clear();
-	
-	m_expressionResult = 0;
+	m_expressionResult.clear();
 }
 
 void MainWindow::equalButton_Pressed() {
 	ui->error_message->clear();
 	auto expressionField = ui->expression_field;
-	std::string expression = expressionField->text().toStdString();
-	expression = validate_expression(expression);
+	QString expression = expressionField->text();
 	
-	if (m_expressionSolver->calculate(expression, m_expressionResult)) {
-		auto numberStr = QString::number(m_expressionResult);
-		expressionField->setText(numberStr);
+	std::string valid = validate_expression(expression.toStdString());
+	
+	static float result = 0;
+	if (m_expressionSolver->calculate(valid, result)) {
+		m_expressionResult = QString::number(result);
+		expressionField->setText(m_expressionResult);
+		
+		m_undoHistory.push({m_expressionResult, m_expressionResult.size()});
 	} else {
 		clearButton_Pressed();
 		ui->error_message->setText("invalid expression");

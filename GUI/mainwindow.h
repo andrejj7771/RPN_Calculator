@@ -3,8 +3,7 @@
 
 #include <QMainWindow>
 #include <QVector>
-
-#include <memory>
+#include <QStack>
 
 namespace Ui {
 	class MainWindow;
@@ -30,12 +29,17 @@ public:
 	
 private:
 	
+	//<Data, SolidItemSize>
+	using UndoData = QPair<QString, int>;
+	
 	Ui::MainWindow *ui;
 	
 	Solver::solver_ptr m_expressionSolver;
-	float m_expressionResult;
+	QString m_expressionResult;
 	
 	QVector<QPushButton*> m_keyboard;
+	
+	QStack<UndoData> m_undoHistory;
 	
 	QPushButton * m_backButton;
 	QPushButton * m_clearButton;
@@ -44,12 +48,15 @@ private:
 	QLineEdit * m_errorMessageField;
 	QPlainTextEdit * m_inputField;
 	
+private:
+	
 	void initKeyboard();
-	void connectKeyboard();
+	void initConnections();
 	void initStyle();
 	
+	void keyPressed(const QString & text);
 	void keyboardButton_Pressed();
-	void backButton_Pressed();
+	void undoButton_Pressed();
 	void clearButton_Pressed();
 	void equalButton_Pressed();
 	

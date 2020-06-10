@@ -111,7 +111,8 @@ inline token_t get_token_type(const token & t) {
 ///
 /// \brief get_priority - get a priority of the operation sign
 /// \param t - expression token
-/// \return UNDEFIND - undefined token, other value depends on the operation sign
+/// \return UNDEFIND - undefined token, other value depends
+///			on the operation sign
 ///
 inline priority_t get_priority(const token & t) {
 	if (t.size() > 1) {
