@@ -160,6 +160,8 @@ void MainWindow::equalButton_Pressed() {
 		m_expressionResult = QString::number(result);
 		expressionField->setText(m_expressionResult);
 		
+		ui->listWidget->addItem(expression + " = " + m_expressionResult);
+		ui->listWidget->scrollToBottom();
 		m_undoHistory.push({m_expressionResult, m_expressionResult.size()});
 	} else {
 		clearButton_Pressed();

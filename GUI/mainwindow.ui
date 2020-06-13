@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>507</width>
-    <height>261</height>
+    <height>316</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>507</width>
-    <height>261</height>
+    <height>316</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -21,18 +21,11 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>1</number>
+    </property>
     <item>
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>0</height>
-       </size>
-      </property>
-     </spacer>
+     <widget class="QListWidget" name="listWidget"/>
     </item>
     <item>
      <widget class="QLineEdit" name="expression_field">
@@ -62,13 +55,22 @@
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>1</number>
+      </property>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0,0">
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
-         <number>1</number>
+         <number>0</number>
         </property>
         <item>
          <widget class="QPushButton" name="button_1">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>1</string>
           </property>
@@ -76,6 +78,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_2">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>2</string>
           </property>
@@ -83,6 +91,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_3">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>3</string>
           </property>
@@ -90,6 +104,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_div">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>/</string>
           </property>
@@ -97,6 +117,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_back">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>back</string>
           </property>
@@ -104,6 +130,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_clear">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>C</string>
           </property>
@@ -112,12 +144,18 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <property name="spacing">
-         <number>1</number>
+         <number>0</number>
         </property>
         <item>
          <widget class="QPushButton" name="button_4">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>4</string>
           </property>
@@ -125,6 +163,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_5">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>5</string>
           </property>
@@ -138,6 +182,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>6</string>
           </property>
@@ -145,6 +195,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_mul">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>*</string>
           </property>
@@ -152,6 +208,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_br_o">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>(</string>
           </property>
@@ -159,6 +221,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_br_c">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>)</string>
           </property>
@@ -167,12 +235,18 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,0,0,0">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
         <property name="spacing">
-         <number>1</number>
+         <number>0</number>
         </property>
         <item>
          <widget class="QPushButton" name="button_7">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>7</string>
           </property>
@@ -180,6 +254,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_8">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>8</string>
           </property>
@@ -187,6 +267,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_9">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>9</string>
           </property>
@@ -194,6 +280,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_sub">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>-</string>
           </property>
@@ -201,6 +293,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_pow">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>^</string>
           </property>
@@ -208,6 +306,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_sqrt">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>sqrt(x)</string>
           </property>
@@ -218,10 +322,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,1,1,1,2">
         <property name="spacing">
-         <number>1</number>
-        </property>
-        <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
+         <number>0</number>
         </property>
         <item>
          <widget class="QPushButton" name="button_0">
@@ -231,6 +332,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>0</string>
           </property>
@@ -238,6 +345,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_dot">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>.</string>
           </property>
@@ -245,6 +358,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_percent">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>%</string>
           </property>
@@ -252,6 +371,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_add">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>+</string>
           </property>
@@ -264,6 +389,12 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
           </property>
           <property name="text">
            <string>=</string>
